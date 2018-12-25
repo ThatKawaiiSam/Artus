@@ -4,6 +4,7 @@ import io.github.plugintemplate.AbstractPluginTemplate;
 import io.github.plugintemplate.handlers.AbstractHandler;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 
@@ -12,19 +13,19 @@ public class ConfigHandler extends AbstractHandler {
 
     private int configVersion = 0;
 
-    public ConfigHandler() {
-        super("config", true);
+    public ConfigHandler(JavaPlugin instance) {
+        super("config", true, instance);
     }
 
-    public ConfigHandler(int configVersion) {
-        this();
+    public ConfigHandler(int configVersion, JavaPlugin instance) {
+        this(instance);
         this.configVersion = configVersion;
     }
 
     @Override
     public void onEnable() {
         checkConfigVersion();
-        checkLicense();
+        //checkLicense();
     }
 
     @Override
@@ -46,7 +47,7 @@ public class ConfigHandler extends AbstractHandler {
 
     private void checkConfigVersion() {
         if (getConfiguration().getInt("Config-Version") != getConfigVersion()) {
-            String absolutePath = AbstractPluginTemplate.getPluginInstance().getDataFolder().getAbsolutePath();
+            String absolutePath = getInstance().getDataFolder().getAbsolutePath();
             File dir = new File(absolutePath);
             File[] filesInDir = dir.listFiles();
 
@@ -55,7 +56,7 @@ public class ConfigHandler extends AbstractHandler {
             }
 
             for (File file : filesInDir) {
-                AbstractPluginTemplate.getPluginInstance().getLogger().warning(file.getName() + "|||" + file.getAbsolutePath());
+                getInstance().getLogger().warning(file.getName() + "|||" + file.getAbsolutePath());
                 file.renameTo(new File(file.getAbsolutePath() + ".old"));
             }
         }

@@ -10,13 +10,13 @@ import java.util.List;
 public abstract class AbstractPluginTemplate extends JavaPlugin {
 
     //Handlers
-    @Getter @Setter private static List<AbstractHandler> handlers;
+    @Getter @Setter private List<AbstractHandler> handlers;
 
-    public static AbstractPluginTemplate getPluginInstance() {
-        return (AbstractPluginTemplate) getProvidingPlugin(AbstractPluginTemplate.class);
+    public AbstractPluginTemplate getPluginInstance() {
+        return this;
     }
 
-    public static AbstractHandler getHandler(String handlerName) {
+    public AbstractHandler getHandler(String handlerName) {
         for (AbstractHandler handler : handlers) {
             if (handler.getHandlerName().equalsIgnoreCase(handlerName)) {
                 return handler;

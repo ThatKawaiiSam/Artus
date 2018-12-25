@@ -1,9 +1,9 @@
 package io.github.plugintemplate.handlers;
 
-import io.github.plugintemplate.AbstractPluginTemplate;
 import io.github.thatkawaiisam.configs.BukkitConfigHelper;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.plugin.java.JavaPlugin;
 
 @Getter @Setter
 public abstract class AbstractHandler {
@@ -11,19 +11,22 @@ public abstract class AbstractHandler {
     private String handlerName;
     private BukkitConfigHelper configuration;
 
-    public AbstractHandler(String handlerName, boolean generateConfigurationFile) {
+    private JavaPlugin instance;
+
+    public AbstractHandler(String handlerName, boolean generateConfigurationFile, JavaPlugin instance) {
+        this.instance = instance;
         this.handlerName = handlerName;
 
         //Whether or not to generate a configuration file.
         if (generateConfigurationFile) {
             configuration = new BukkitConfigHelper(
-                    AbstractPluginTemplate.getPluginInstance(),
+                    instance,
                     handlerName,
-                    AbstractPluginTemplate.getPluginInstance().getDataFolder().getAbsolutePath()
+                    instance.getDataFolder().getAbsolutePath()
             );
         }
 
-        AbstractPluginTemplate.getPluginInstance().getLogger().info("Registered " + handlerName + " Handler.");
+        instance.getLogger().info("Registered " + handlerName + " Handler.");
     }
 
     public abstract void onEnable();
@@ -32,12 +35,12 @@ public abstract class AbstractHandler {
 
     public void enable() {
         onEnable();
-        AbstractPluginTemplate.getPluginInstance().getLogger().info("Enabled " + this.handlerName + " Handler.");
+        instance.getLogger().info("Enabled " + this.handlerName + " Handler.");
     }
 
     public void disable() {
         onDisable();
-        AbstractPluginTemplate.getPluginInstance().getLogger().info("Disabled " + this.handlerName + " Handler.");
+        instance.getLogger().info("Disabled " + this.handlerName + " Handler.");
     }
 
 }
