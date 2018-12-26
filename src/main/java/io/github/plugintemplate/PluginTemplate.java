@@ -1,6 +1,8 @@
 package io.github.plugintemplate;
 
 import io.github.plugintemplate.handler.Handler;
+import io.github.plugintemplate.handler.impl.ModuleHandler;
+import io.github.plugintemplate.module.Module;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -21,5 +23,9 @@ public abstract class PluginTemplate extends JavaPlugin {
                 .filter(handler -> handler.getHandlerName().equalsIgnoreCase(handlerName))
                 .findFirst()
                 .orElse(null);
+    }
+
+    public Module getModule(String module) {
+        return ((ModuleHandler)getHandler("modules")).getModule(module);
     }
 }
