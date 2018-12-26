@@ -1,4 +1,4 @@
-package io.github.plugintemplate.handlers;
+package io.github.plugintemplate.handler;
 
 import io.github.thatkawaiisam.configs.BukkitConfigHelper;
 import lombok.Getter;
@@ -6,14 +6,14 @@ import lombok.Setter;
 import org.bukkit.plugin.java.JavaPlugin;
 
 @Getter @Setter
-public abstract class AbstractHandler {
+public abstract class Handler {
 
     private String handlerName;
     private BukkitConfigHelper configuration;
 
     private JavaPlugin instance;
 
-    public AbstractHandler(String handlerName, boolean generateConfigurationFile, JavaPlugin instance) {
+    public Handler(String handlerName, boolean generateConfigurationFile, JavaPlugin instance) {
         this.instance = instance;
         this.handlerName = handlerName;
 
@@ -26,7 +26,7 @@ public abstract class AbstractHandler {
             );
         }
 
-        instance.getLogger().info("Registered " + handlerName + " Handler.");
+        instance.getLogger().info(String.format("Registered %s Handler.", handlerName));
     }
 
     public abstract void onEnable();
@@ -35,12 +35,12 @@ public abstract class AbstractHandler {
 
     public void enable() {
         onEnable();
-        instance.getLogger().info("Enabled " + this.handlerName + " Handler.");
+        instance.getLogger().info(String.format("Enabled %s Handler.", this.handlerName));
     }
 
     public void disable() {
         onDisable();
-        instance.getLogger().info("Disabled " + this.handlerName + " Handler.");
+        instance.getLogger().info(String.format("Disabled %s Handler.", this.handlerName));
     }
 
 }

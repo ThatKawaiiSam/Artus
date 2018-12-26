@@ -1,20 +1,18 @@
-package io.github.plugintemplate.handlers.impl;
+package io.github.plugintemplate.handler.impl;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.PaperCommandManager;
-import io.github.plugintemplate.AbstractPluginTemplate;
-import io.github.plugintemplate.handlers.AbstractHandler;
-import io.github.plugintemplate.modules.AbstractModule;
+import io.github.plugintemplate.handler.Handler;
 import io.github.thatkawaiisam.utils.ClassUtility;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class CommandHandler extends AbstractHandler {
+public class CommandHandler extends Handler {
 
     private PaperCommandManager manager;
-    private Set<BaseCommand> baseCommands = new HashSet<>();
+    private final Set<BaseCommand> baseCommands = new HashSet<>();
 
     public CommandHandler(JavaPlugin instance) {
         super("command", false, instance);
@@ -40,20 +38,16 @@ public class CommandHandler extends AbstractHandler {
 
     public boolean isModule(Class<?> clazz) {
         return BaseCommand.class.isAssignableFrom(clazz);
-        //return clazz.isAssignableFrom(AbstractModule.class);
+        //return clazz.isAssignableFrom(Module.class);
     }
 
     @Override
     public void onEnable() {
-        for (BaseCommand command : baseCommands) {
-            manager.registerCommand(command);
-        }
+        baseCommands.forEach(manager::registerCommand);
     }
 
     @Override
     public void onDisable() {
-        for (BaseCommand command : baseCommands) {
-            manager.unregisterCommand(command);
-        }
+        baseCommands.forEach(manager::unregisterCommand);
     }
 }
