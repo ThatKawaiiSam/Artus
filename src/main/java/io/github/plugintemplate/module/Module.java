@@ -1,4 +1,4 @@
-package io.github.plugintemplate.modules;
+package io.github.plugintemplate.module;
 
 import io.github.thatkawaiisam.configs.BukkitConfigHelper;
 import lombok.Getter;
@@ -12,16 +12,16 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Getter @Setter
-public abstract class AbstractModule {
+public abstract class Module {
 
     private BukkitConfigHelper configuration;
     private String moduleName;
-    private boolean enabled = false;
-    private Set<Listener> listeners = new HashSet<>();
+    private boolean enabled;
+    private final Set<Listener> listeners = new HashSet<>();
 
     private JavaPlugin instance;
 
-    public AbstractModule(String moduleName, JavaPlugin instance) {
+    public Module(String moduleName, JavaPlugin instance) {
         this.instance = instance;
         this.moduleName = moduleName;
 
@@ -32,33 +32,34 @@ public abstract class AbstractModule {
                 instance.getDataFolder().getAbsolutePath()
         );
 
-        instance.getLogger().info("Successfully registered module '" + moduleName + "'.");
+        instance.getLogger().info(String.format("Successfully registered module '%s'.", moduleName));
     }
 
     public void enable() {
         onEnable();
-        for (Listener listener : listeners) {
-            Bukkit.getPluginManager().registerEvents(listener, instance);
-        }
+        listeners.forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, instance));
+
         setEnabled(true);
-        instance.getLogger().info("Successfully enabled module '" + moduleName + "'.");
+
+        instance.getLogger().info(String.format("Successfully enabled module '%s'.", moduleName));
     }
 
     public void disable() {
-        for (Listener listener : listeners) {
-            HandlerList.unregisterAll(listener);
-        }
+        listeners.forEach(HandlerList::unregisterAll);
+
         listeners.clear();
+
         onDisable();
         setEnabled(false);
-        instance.getLogger().info("Successfully disabled module '" + moduleName + "'.");
+
+        instance.getLogger().info(String.format("Successfully disabled module '%s'.", moduleName));
     }
 
     public abstract void onEnable();
 
     public abstract void onDisable();
 
-    public String displayStatus(){
+    public String getDisplayStatus(){
         return enabled ? "&aEnabled" : "&cDisabled";
     }
 

@@ -1,15 +1,15 @@
-package io.github.plugintemplate.handlers.impl;
+package io.github.plugintemplate.handler.impl;
 
-import io.github.plugintemplate.AbstractPluginTemplate;
-import io.github.plugintemplate.handlers.AbstractHandler;
+import io.github.plugintemplate.handler.Handler;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.util.Arrays;
 
 @Getter @Setter
-public class ConfigHandler extends AbstractHandler {
+public class ConfigHandler extends Handler {
 
     private int configVersion = 0;
 
@@ -19,6 +19,7 @@ public class ConfigHandler extends AbstractHandler {
 
     public ConfigHandler(int configVersion, JavaPlugin instance) {
         this(instance);
+
         this.configVersion = configVersion;
     }
 
@@ -55,10 +56,12 @@ public class ConfigHandler extends AbstractHandler {
                 return;
             }
 
-            for (File file : filesInDir) {
+            Arrays.stream(filesInDir).forEach(file -> {
                 getInstance().getLogger().warning(file.getName() + "|||" + file.getAbsolutePath());
+
                 file.renameTo(new File(file.getAbsolutePath() + ".old"));
-            }
+            });
+
         }
     }
 }

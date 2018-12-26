@@ -1,8 +1,7 @@
-package io.github.plugintemplate.handlers.impl;
+package io.github.plugintemplate.handler.impl;
 
-import io.github.plugintemplate.AbstractPluginTemplate;
-import io.github.plugintemplate.handlers.AbstractHandler;
-import io.github.plugintemplate.modules.AbstractModule;
+import io.github.plugintemplate.handler.Handler;
+import io.github.plugintemplate.module.Module;
 import io.github.thatkawaiisam.utils.ClassUtility;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -11,14 +10,15 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ModuleHandler extends AbstractHandler {
+public class ModuleHandler extends Handler {
 
     //Modules
-    @Getter private List<AbstractModule> modules = new ArrayList<>();
+    @Getter private List<Module> modules = new ArrayList<>();
 
     public ModuleHandler(JavaPlugin instance){
         super("modules", true, instance);
-        new File(instance.getDataFolder().getAbsolutePath() + File.separator + "modules").mkdirs();
+
+        new File(String.format("%s%smodules", instance.getDataFolder().getAbsolutePath(), File.separator)).mkdirs();
     }
 
     public ModuleHandler(String modulePath, JavaPlugin instance) {
@@ -30,7 +30,7 @@ public class ModuleHandler extends AbstractHandler {
         for (Class<?> clazz : ClassUtility.getClassesInPackage(plugin, packageName)) {
             if (isModule(clazz)) {
                  try {
-                    addModule((AbstractModule)clazz.newInstance());
+                    addModule((Module)clazz.newInstance());
                  } catch (Exception e) {
                      e.printStackTrace();
                  }
@@ -39,15 +39,15 @@ public class ModuleHandler extends AbstractHandler {
     }
 
     private boolean isModule(Class<?> clazz) {
-        return AbstractModule.class.isAssignableFrom(clazz);
+        return Module.class.isAssignableFrom(clazz);
     }
 
-    public void addModule(AbstractModule module) {
+    public void addModule(Module module) {
         modules.add(module);
     }
 
-    public AbstractModule getModule(String moduleName) {
-        for (AbstractModule module : modules) {
+    public Module getModule(String moduleName) {
+        for (Module module : modules) {
             if (module.getModuleName().equalsIgnoreCase(moduleName)) {
                 return module;
             }
@@ -57,21 +57,17 @@ public class ModuleHandler extends AbstractHandler {
 
     @Override
     public void onEnable() {
-        for (AbstractModule module : getModules()) {
-            if (!module.isEnabled()
-                    && getConfiguration().getBoolean(module.getModuleName())) {
-                module.enable();
-            }
-        }
+        this.getModules().stream()
+                .filter(module -> !module.isEnabled())
+                .filter(module -> getConfiguration().getBoolean(module.getModuleName()))
+                .forEach(Module::enable);
     }
 
     @Override
     public void onDisable() {
-        for (AbstractModule module : getModules()) {
-            if (module.isEnabled()) {
-                module.disable();
-            }
-        }
+        this.getModules().stream()
+                .filter(Module::isEnabled)
+                .forEach(Module::disable);
     }
 
 }

@@ -1,7 +1,6 @@
-package io.github.plugintemplate.handlers.impl;
+package io.github.plugintemplate.handler.impl;
 
-import io.github.plugintemplate.handlers.AbstractHandler;
-import io.github.plugintemplate.modules.AbstractModule;
+import io.github.plugintemplate.handler.Handler;
 import io.github.thatkawaiisam.utils.ClassUtility;
 import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
@@ -12,9 +11,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ListenerHandler extends AbstractHandler {
+public class ListenerHandler extends Handler {
 
-    private Set<Listener> listeners = new HashSet<>();
+    private final Set<Listener> listeners = new HashSet<>();
 
     public ListenerHandler(JavaPlugin instance) {
         super("listeners", false, instance);
@@ -48,15 +47,11 @@ public class ListenerHandler extends AbstractHandler {
     }
 
     public void registerListeners() {
-        for (Listener listener : listeners) {
-            Bukkit.getPluginManager().registerEvents(listener, getInstance());
-        }
+        this.listeners.forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, getInstance()));
     }
 
     public void unregisterListeners() {
-        for (Listener listener : listeners) {
-            HandlerList.unregisterAll(listener);
-        }
+        this.listeners.forEach(HandlerList::unregisterAll);
     }
 
     @Override
