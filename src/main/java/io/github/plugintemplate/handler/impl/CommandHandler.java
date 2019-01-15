@@ -26,7 +26,7 @@ public class CommandHandler extends Handler {
 
     public void loadCommandFromPackage(JavaPlugin plugin, String packageName) {
         for (Class<?> clazz : ClassUtility.getClassesInPackage(plugin, packageName)) {
-            if (isModule(clazz)) {
+            if (isCommand(clazz)) {
                 try {
                     baseCommands.add((BaseCommand) clazz.newInstance());
                 } catch (Exception e) {
@@ -36,9 +36,8 @@ public class CommandHandler extends Handler {
         }
     }
 
-    public boolean isModule(Class<?> clazz) {
+    public boolean isCommand(Class<?> clazz) {
         return BaseCommand.class.isAssignableFrom(clazz);
-        //return clazz.isAssignableFrom(Module.class);
     }
 
     @Override

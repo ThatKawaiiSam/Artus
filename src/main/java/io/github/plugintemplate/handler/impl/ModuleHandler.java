@@ -27,15 +27,15 @@ public class ModuleHandler extends Handler {
     }
 
     public void loadModulesFromPackage(JavaPlugin plugin, String packageName) {
-        for (Class<?> clazz : ClassUtility.getClassesInPackage(plugin, packageName)) {
-            if (isModule(clazz)) {
-                 try {
-                    addModule((Module)clazz.newInstance());
-                 } catch (Exception e) {
-                     e.printStackTrace();
-                 }
-            }
-        }
+        ClassUtility.getClassesInPackage(plugin, packageName).stream()
+                .filter(this::isModule)
+                .forEach(aClass -> {
+                    try {
+                        addModule((Module)aClass.newInstance());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
     }
 
     private boolean isModule(Class<?> clazz) {
@@ -47,12 +47,10 @@ public class ModuleHandler extends Handler {
     }
 
     public Module getModule(String moduleName) {
-        for (Module module : modules) {
-            if (module.getModuleName().equalsIgnoreCase(moduleName)) {
-                return module;
-            }
-        }
-        return null;
+        return modules.stream()
+                .filter(module -> module.getModuleName().equalsIgnoreCase(moduleName))
+                .findFirst()
+                .orElse(null);
     }
 
     @Override

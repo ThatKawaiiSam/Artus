@@ -1,6 +1,7 @@
 package io.github.plugintemplate.handler.impl;
 
 import io.github.plugintemplate.handler.Handler;
+import io.github.plugintemplate.module.Module;
 import io.github.thatkawaiisam.utils.ClassUtility;
 import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
@@ -25,15 +26,15 @@ public class ListenerHandler extends Handler {
     }
 
     public void loadListenersFromPackage(Plugin plugin, String packageName) {
-        for (Class<?> clazz : ClassUtility.getClassesInPackage(plugin, packageName)) {
-            if (isListener(clazz)) {
-                try {
-                    listeners.add((Listener) clazz.newInstance());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        ClassUtility.getClassesInPackage(plugin, packageName).stream()
+                .filter(this::isListener)
+                .forEach(aClass -> {
+                    try {
+                        listeners.add((Listener) aClass.newInstance());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
     }
 
     public boolean isListener(Class<?> clazz) {
