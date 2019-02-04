@@ -15,14 +15,16 @@ public class ModuleHandler extends Handler {
     //Modules
     @Getter private List<Module> modules = new ArrayList<>();
 
-    public ModuleHandler(JavaPlugin instance){
+    public ModuleHandler(JavaPlugin instance, boolean generateFolder){
         super("modules", true, instance);
 
-        new File(String.format("%s%smodules", instance.getDataFolder().getAbsolutePath(), File.separator)).mkdirs();
+        if (generateFolder) {
+            new File(String.format("%s%smodules", instance.getDataFolder().getAbsolutePath(), File.separator)).mkdirs();
+        }
     }
 
-    public ModuleHandler(String modulePath, JavaPlugin instance) {
-        this(instance);
+    public ModuleHandler(String modulePath, JavaPlugin instance, boolean generateFolder) {
+        this(instance, generateFolder);
         loadModulesFromPackage(instance, modulePath);
     }
 

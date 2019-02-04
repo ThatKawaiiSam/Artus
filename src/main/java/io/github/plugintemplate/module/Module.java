@@ -16,21 +16,23 @@ public abstract class Module {
 
     private BukkitConfigHelper configuration;
     private String moduleName;
-    private boolean enabled;
+    private boolean enabled = false;
     private final Set<Listener> listeners = new HashSet<>();
 
     private JavaPlugin instance;
 
-    public Module(String moduleName, JavaPlugin instance) {
+    public Module(String moduleName, JavaPlugin instance, boolean generateConfiguration) {
         this.instance = instance;
         this.moduleName = moduleName;
 
-        //Setup configuration for each module
-        this.configuration = new BukkitConfigHelper(
-                instance,
-                "modules/" + moduleName,
-                instance.getDataFolder().getAbsolutePath()
-        );
+        if (generateConfiguration) {
+            //Setup configuration for each module
+            this.configuration = new BukkitConfigHelper(
+                    instance,
+                    "modules/" + moduleName,
+                    instance.getDataFolder().getAbsolutePath()
+            );
+        }
 
         instance.getLogger().info(String.format("Successfully registered module '%s'.", moduleName));
     }
