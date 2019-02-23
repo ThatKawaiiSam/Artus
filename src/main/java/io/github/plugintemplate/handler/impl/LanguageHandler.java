@@ -18,16 +18,7 @@ public class LanguageHandler extends Handler {
 
     @Override
     public void onEnable() {
-        final Configuration c = getConfiguration();
-        c.getKeys(false).forEach(key -> {
-            String value;
-            if (c.isList(key)) {
-                value = Joiner.on("\n").join(c.getStringList(key));
-            } else {
-                value = c.getString(key);
-            }
-            values.put(key, value);
-        });
+        attemptLoad(getConfiguration());
     }
 
     @Override
@@ -42,4 +33,18 @@ public class LanguageHandler extends Handler {
         }
         return value;
     }
+
+    public void attemptLoad(Configuration configuration) {
+        configuration.getValues(true).forEach((key, object) -> {
+            getInstance().getLogger().info("Loaded in language value for '" + key + "'.");
+            String value;
+            if (configuration.isList(key)) {
+                value = Joiner.on("\n").join(configuration.getStringList(key));
+            } else {
+                value = configuration.getString(key);
+            }
+            values.put(key, value);
+        });
+    }
+
 }
