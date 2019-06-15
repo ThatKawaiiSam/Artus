@@ -38,6 +38,10 @@ public abstract class Module {
     }
 
     public void enable() {
+        if (this.configuration != null) {
+            getConfiguration().load();
+        }
+
         onEnable();
         listeners.forEach(listener -> Bukkit.getPluginManager().registerEvents(listener, instance));
 
