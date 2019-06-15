@@ -7,10 +7,11 @@ import org.bukkit.configuration.Configuration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class LanguageHandler extends Handler {
 
-    private HashMap<String, String> values = new HashMap<>();
+    private ConcurrentHashMap<String, String> values = new ConcurrentHashMap<>();
 
     public LanguageHandler(JavaPlugin instance) {
         super("lang", true, instance);
@@ -27,22 +28,17 @@ public class LanguageHandler extends Handler {
     }
 
     public String getValue(String key, boolean color) {
-        final String value = values.get(key);
-        if (color) {
-            return MessageUtility.formatMessage(value);
+        String string = values.get(key);
+        if (string == null) {
+            return "";
         }
-        return value;
+        return color ? MessageUtility.formatMessage(string) : string;
     }
 
     public void attemptLoad(Configuration configuration) {
         configuration.getValues(true).forEach((key, object) -> {
             getInstance().getLogger().info("Loaded in language value for '" + key + "'.");
-            String value;
-            if (configuration.isList(key)) {
-                value = Joiner.on("\n").join(configuration.getStringList(key));
-            } else {
-                value = configuration.getString(key);
-            }
+            String value = configuration.isList(key) ? Joiner.on("\n").join(configuration.getStringList(key)) : configuration.getString(key);
             values.put(key, value);
         });
     }

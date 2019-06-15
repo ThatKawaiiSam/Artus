@@ -34,6 +34,9 @@ public abstract class Handler {
     public abstract void onDisable();
 
     public void enable() {
+        if (this.configuration != null) {
+            getConfiguration().load();
+        }
         onEnable();
         instance.getLogger().info(String.format("Enabled %s Handler.", this.handlerName));
     }

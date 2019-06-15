@@ -36,13 +36,6 @@ public class ConfigHandler extends Handler {
 
     private void checkLicense() {
         String license = getConfiguration().getString("License");
-//        AzalonAPI.LicenseResult licenseResult = AzalonAPI.checkLicense(license);
-//        if (licenseResult.action == AzalonAPI.LicenseAction.DENY) {
-//            HubAPI.getLogger().warning("[License] " + "Unable to verify license: " + licenseResult.response);
-//            Bukkit.getServer().shutdown();
-//        } else {
-//            HubAPI.getLogger().info("[License] " + "Successfully verified license.");
-//        }
         //TODO finish this
     }
 

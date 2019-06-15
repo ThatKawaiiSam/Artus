@@ -1,8 +1,10 @@
 package io.github.plugintemplate.handler.impl;
 
+import com.google.common.collect.Sets;
 import io.github.plugintemplate.handler.Handler;
 import io.github.plugintemplate.module.Module;
 import io.github.thatkawaiisam.utils.ClassUtility;
+import io.netty.util.internal.ConcurrentSet;
 import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
@@ -11,10 +13,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ListenerHandler extends Handler {
 
-    private final Set<Listener> listeners = new HashSet<>();
+    private final Set<Listener> listeners = Sets.newConcurrentHashSet();
 
     public ListenerHandler(JavaPlugin instance) {
         super("listeners", false, instance);
