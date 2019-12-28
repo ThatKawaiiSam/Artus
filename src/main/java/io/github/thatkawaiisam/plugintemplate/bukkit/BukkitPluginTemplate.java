@@ -31,7 +31,7 @@ public class BukkitPluginTemplate extends JavaPlugin {
 
     public <T extends BukkitModule> T getModule(String module) {
         BukkitModuleHandler moduleHandler = getHandler("modules");
-        return moduleHandler.getModule(module);
+        return (T) moduleHandler.getModule(module);
     }
 
     public void enableHandlers() {

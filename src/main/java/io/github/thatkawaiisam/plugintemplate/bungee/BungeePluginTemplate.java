@@ -30,7 +30,7 @@ public class BungeePluginTemplate extends Plugin {
 
     public <T extends BungeeModule> T getModule(String module) {
         BungeeModuleHandler moduleHandler = getHandler("modules");
-        return moduleHandler.getModule(module);
+        return (T) moduleHandler.getModule(module);
 //        return null;
     }
 

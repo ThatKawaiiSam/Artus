@@ -1,6 +1,5 @@
 package io.github.thatkawaiisam.plugintemplate.shared.database;
 
-<<<<<<< HEAD
 import lombok.Getter;
 
 @Getter
@@ -13,7 +12,4 @@ public enum DBSortDirection {
     DBSortDirection(int value) {
         this.value = value;
     }
-=======
-public class DBSortDirection {
->>>>>>> master
 }
