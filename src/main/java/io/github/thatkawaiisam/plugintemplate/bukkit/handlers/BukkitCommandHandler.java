@@ -5,6 +5,7 @@ import co.aikar.commands.PaperCommandManager;
 import io.github.thatkawaiisam.plugintemplate.bukkit.BukkitHandler;
 import io.github.thatkawaiisam.plugintemplate.shared.ConstructorInject;
 import io.github.thatkawaiisam.utils.ClassUtility;
+import lombok.Getter;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -16,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class BukkitCommandHandler extends BukkitHandler {
 
-    private PaperCommandManager manager;
+    @Getter private PaperCommandManager manager;
     Set<BaseCommand> baseCommands = ConcurrentHashMap.newKeySet();
 
     public BukkitCommandHandler(JavaPlugin javaPlugin, String packageName) {

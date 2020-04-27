@@ -12,6 +12,7 @@ public abstract class Module {
     public IConfiguration configuration;
     public boolean generateConfiguration;
     public Set<IListener> listeners = new HashSet<>();
+    public Set<ICommand> commands = new HashSet<>();
     @Getter public boolean enabled = false;
     private Logger logger;
 
@@ -35,13 +36,16 @@ public abstract class Module {
             return;
         }
         listeners.forEach(IListener::register);
+        commands.forEach(ICommand::register);
         logger.info(String.format("[MODULE] Enabled %s Module.", this.moduleName));
     }
 
     public void disable() {
         listeners.forEach(IListener::unregister);
+        commands.forEach(ICommand::unregister);
 
         listeners.clear();
+        commands.clear();
 
         onDisable();
 
@@ -51,6 +55,10 @@ public abstract class Module {
 
     public void addListener(IListener listener) {
         listeners.add(listener);
+    }
+
+    public void addCommand(ICommand command) {
+        commands.add(command);
     }
 
 }
