@@ -16,6 +16,12 @@ public abstract class Module {
     @Getter public boolean enabled = false;
     private Logger logger;
 
+    /**
+     *
+     * @param moduleName
+     * @param logger
+     * @param generateConfiguration
+     */
     public Module(String moduleName, Logger logger, boolean generateConfiguration) {
         this.moduleName = moduleName;
         this.logger = logger;
@@ -53,10 +59,18 @@ public abstract class Module {
         logger.info(String.format("[MODULE] Disabled %s Module.", this.moduleName));
     }
 
+    /**
+     *
+     * @param listener
+     */
     public void addListener(IListener listener) {
         listeners.add(listener);
     }
 
+    /**
+     *
+     * @param command
+     */
     public void addCommand(ICommand command) {
         commands.add(command);
     }

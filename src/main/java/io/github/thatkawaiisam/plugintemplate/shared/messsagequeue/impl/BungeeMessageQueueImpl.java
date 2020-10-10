@@ -15,7 +15,6 @@ public class BungeeMessageQueueImpl implements IMessageQueue {
 
     @Override
     public void setup() {
-
         javaPlugin.getServer().getMessenger().registerOutgoingPluginChannel(javaPlugin, "BungeeCord");
         javaPlugin.getServer().getMessenger().registerIncomingPluginChannel(javaPlugin, "BungeeCord", null);
     }

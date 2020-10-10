@@ -1,12 +1,14 @@
-package io.github.thatkawaiisam.plugintemplate.bukkit.handlers;
+package io.github.thatkawaiisam.plugintemplate.bungee.handlers;
 
 import co.aikar.commands.BaseCommand;
+import co.aikar.commands.BungeeCommandManager;
+import co.aikar.commands.CommandManager;
 import co.aikar.commands.PaperCommandManager;
-import io.github.thatkawaiisam.plugintemplate.bukkit.BukkitHandler;
+import io.github.thatkawaiisam.plugintemplate.bungee.BungeeHandler;
 import io.github.thatkawaiisam.plugintemplate.shared.ConstructorInject;
 import io.github.thatkawaiisam.utils.ClassUtility;
 import lombok.Getter;
-import org.bukkit.configuration.InvalidConfigurationException;
+import net.md_5.bungee.api.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
@@ -15,21 +17,21 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class BukkitCommandHandler extends BukkitHandler {
+public class BungeeCommandHandler extends BungeeHandler {
 
-    @Getter private PaperCommandManager manager;
+    @Getter private BungeeCommandManager manager;
     Set<BaseCommand> baseCommands = ConcurrentHashMap.newKeySet();
 
-    public BukkitCommandHandler(JavaPlugin javaPlugin, String packageName) {
+    public BungeeCommandHandler(Plugin javaPlugin, String packageName) {
         super(javaPlugin, "commands", false);
-        manager = new PaperCommandManager(javaPlugin);
+        manager = new BungeeCommandManager(javaPlugin);
         loadCommandFromPackage(javaPlugin, packageName);
         loadCustomLanguageFile();
     }
 
-    public BukkitCommandHandler(JavaPlugin javaPlugin, String packageName, ConstructorInject constructorInject) {
+    public BungeeCommandHandler(Plugin javaPlugin, String packageName, ConstructorInject constructorInject) {
         super(javaPlugin, "commands", false);
-        manager = new PaperCommandManager(javaPlugin);
+        manager = new BungeeCommandManager(javaPlugin);
         loadCommandFromPackage(javaPlugin, packageName, constructorInject);
         loadCustomLanguageFile();
     }
@@ -40,14 +42,12 @@ public class BukkitCommandHandler extends BukkitHandler {
         }
         try {
             manager.getLocales().loadYamlLanguageFile("lang.yml", Locale.ENGLISH);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InvalidConfigurationException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void loadCommandFromPackage(JavaPlugin plugin, String packageName) {
+    public void loadCommandFromPackage(Plugin plugin, String packageName) {
         for (Class<?> clazz : ClassUtility.getClassesInPackage(plugin.getClass(), packageName)) {
             if (isCommand(clazz)) {
                 try {
@@ -59,7 +59,7 @@ public class BukkitCommandHandler extends BukkitHandler {
         }
     }
 
-    public void loadCommandFromPackage(JavaPlugin plugin, String packageName, ConstructorInject constructorInject) {
+    public void loadCommandFromPackage(Plugin plugin, String packageName, ConstructorInject constructorInject) {
         for (Class<?> clazz : ClassUtility.getClassesInPackage(plugin.getClass(), packageName)) {
             if (isCommand(clazz)) {
                 try {
@@ -81,7 +81,7 @@ public class BukkitCommandHandler extends BukkitHandler {
     public void onEnable() {
         baseCommands.forEach(baseCommand -> {
             manager.registerCommand(baseCommand);
-            getJavaPlugin().getLogger().info("[COMMAND] Registered " + baseCommand.getClass().getSimpleName() + ".");
+            getPlugin().getLogger().info("[COMMAND] Registered " + baseCommand.getClass().getSimpleName() + ".");
         });
     }
 
@@ -89,7 +89,8 @@ public class BukkitCommandHandler extends BukkitHandler {
     public void onDisable() {
         baseCommands.forEach(baseCommand -> {
             manager.registerCommand(baseCommand);
-            getJavaPlugin().getLogger().info("[COMMAND] Unregistered " + baseCommand.getClass().getSimpleName() + ".");
+            getPlugin().getLogger().info("[COMMAND] Unregistered " + baseCommand.getClass().getSimpleName() + ".");
         });
     }
 }
+

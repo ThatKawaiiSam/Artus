@@ -1,9 +1,7 @@
 package io.github.thatkawaiisam.plugintemplate.shared;
 
-import io.github.thatkawaiisam.plugintemplate.bukkit.BukkitConfiguration;
 import lombok.Getter;
 import lombok.Setter;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Logger;
 

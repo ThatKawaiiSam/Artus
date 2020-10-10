@@ -34,6 +34,9 @@ public class BukkitPluginTemplate extends JavaPlugin {
         return (T) moduleHandler.getModule(module);
     }
 
+    /**
+     *
+     */
     public void enableHandlers() {
         for (LoadLevel loadLevel : LoadLevel.values()) {
             for (Handler handler : handlers) {
@@ -44,6 +47,9 @@ public class BukkitPluginTemplate extends JavaPlugin {
         }
     }
 
+    /**
+     *
+     */
     public void disableHandlers() {
         List<LoadLevel> loads = Arrays.asList(LoadLevel.values());
         Collections.reverse(loads);

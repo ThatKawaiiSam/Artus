@@ -11,6 +11,12 @@ public abstract class BukkitHandler<T extends JavaPlugin> extends Handler {
 
     @Getter private T javaPlugin;
 
+    /**
+     *
+     * @param plugin
+     * @param handlerName
+     * @param generateConfiguration
+     */
     public BukkitHandler(T plugin, String handlerName, boolean generateConfiguration) {
         super(handlerName, plugin.getLogger(), generateConfiguration);
 

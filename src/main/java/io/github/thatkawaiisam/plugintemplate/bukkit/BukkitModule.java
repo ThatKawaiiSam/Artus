@@ -9,6 +9,12 @@ public abstract class BukkitModule<T extends JavaPlugin> extends Module {
 
     @Getter private T javaPlugin;
 
+    /**
+     *
+     * @param moduleName
+     * @param plugin
+     * @param generateConfiguration
+     */
     public BukkitModule(String moduleName, T plugin, boolean generateConfiguration) {
         super(moduleName, plugin.getLogger(), generateConfiguration);
 

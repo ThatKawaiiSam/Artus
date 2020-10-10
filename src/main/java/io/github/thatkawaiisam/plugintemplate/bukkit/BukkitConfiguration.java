@@ -6,6 +6,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class BukkitConfiguration extends BukkitConfigHelper implements IConfiguration {
 
+    /**
+     *
+     * @param plugin
+     * @param name
+     * @param directory
+     */
     public BukkitConfiguration(JavaPlugin plugin, String name, String directory) {
         super(plugin, name, directory);
     }

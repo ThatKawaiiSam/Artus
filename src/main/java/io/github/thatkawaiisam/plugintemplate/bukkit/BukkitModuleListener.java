@@ -7,6 +7,10 @@ public class BukkitModuleListener<T extends BukkitModule<E>, E extends JavaPlugi
 
     @Getter private T module;
 
+    /**
+     *
+     * @param module
+     */
     public BukkitModuleListener(T module) {
         super(module.getJavaPlugin());
         this.module = module;

@@ -10,6 +10,10 @@ public class BukkitListener<T extends JavaPlugin> implements IListener, Listener
 
     @Getter private T javaPlugin;
 
+    /**
+     *
+     * @param javaPlugin
+     */
     public BukkitListener(T javaPlugin) {
         this.javaPlugin = javaPlugin;
     }

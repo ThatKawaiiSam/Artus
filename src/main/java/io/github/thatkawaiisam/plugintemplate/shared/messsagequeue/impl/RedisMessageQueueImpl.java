@@ -1,16 +1,15 @@
 package io.github.thatkawaiisam.plugintemplate.shared.messsagequeue.impl;
 
 import com.google.gson.JsonObject;
-import io.github.thatkawaiisam.jedis.helper.IJedisSubscription;
-import io.github.thatkawaiisam.jedis.helper.JedisCredentials;
-import io.github.thatkawaiisam.jedis.helper.JedisHelper;
-import io.github.thatkawaiisam.jedis.helper.JedisSubscriber;
+import io.github.thatkawaiisam.jedishelper.JedisCredentials;
+import io.github.thatkawaiisam.jedishelper.JedisHelper;
+import io.github.thatkawaiisam.jedishelper.JedisSubscriber;
+import io.github.thatkawaiisam.jedishelper.JedisSubscription;
 import io.github.thatkawaiisam.plugintemplate.shared.messsagequeue.IMessageQueue;
 import io.github.thatkawaiisam.plugintemplate.shared.messsagequeue.ISubscription;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -47,7 +46,7 @@ public class RedisMessageQueueImpl implements IMessageQueue {
 
     @Override
     public void registerSubscription(ISubscription subscription) {
-        JedisSubscriber subscriber = new JedisSubscriber(subscription.channels().toString(), helper, new IJedisSubscription() {
+        JedisSubscriber subscriber = new JedisSubscriber(subscription.channels().toString(), helper, new JedisSubscription() {
             @Override
             public void handleMessage(String payload, JsonObject data) {
                 subscription.handleMessage(payload, data);
