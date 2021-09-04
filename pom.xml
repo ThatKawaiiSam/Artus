@@ -5,7 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.github.thatkawaiisam</groupId>
-    <artifactId>plugintemplate</artifactId>
+    <artifactId>artus</artifactId>
+    <name>Artus</name>
     <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
 
@@ -70,10 +71,10 @@
             <version>0.5.0-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
-        <!-- Configuration Helper -->
+        <!-- Filare -->
         <dependency>
             <groupId>io.github.thatkawaiisam</groupId>
-            <artifactId>configs</artifactId>
+            <artifactId>filare</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
@@ -81,27 +82,6 @@
         <dependency>
             <groupId>io.github.thatkawaiisam</groupId>
             <artifactId>utils</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <!-- MongoDB -->
-        <dependency>
-            <groupId>org.mongodb</groupId>
-            <artifactId>mongo-java-driver</artifactId>
-            <version>3.8.2</version>
-            <scope>provided</scope>
-        </dependency>
-        <!-- Redis -->
-        <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-            <version>2.9.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <!-- Jedis Helper -->
-        <dependency>
-            <groupId>io.github.thatkawaiisam</groupId>
-            <artifactId>jedishelper</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
