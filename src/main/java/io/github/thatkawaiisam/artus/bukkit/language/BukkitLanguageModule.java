@@ -15,6 +15,11 @@ public class BukkitLanguageModule<T extends BukkitPlugin> extends BukkitModule<T
 
     private ConcurrentHashMap<String, LanguageValue> values = new ConcurrentHashMap<>();
 
+    /**
+     * Bukkit Language Module.
+     *
+     * @param plugin instance.
+     */
     public BukkitLanguageModule(T plugin) {
         super(plugin, "lang");
         getOptions().setGenerateConfiguration(true);
@@ -22,7 +27,10 @@ public class BukkitLanguageModule<T extends BukkitPlugin> extends BukkitModule<T
 
     @Override
     public void onEnable() {
+        // Get configuration.
         Configuration c = getConfiguration().getImplementation();
+
+        // Loop through each key in configuration.
         c.getValues(true).forEach((key, object) -> {
             if (c.isList(key)) {
                 String newValue = "";
@@ -55,11 +63,25 @@ public class BukkitLanguageModule<T extends BukkitPlugin> extends BukkitModule<T
         return getId();
     }
 
+    /**
+     * Get language value.
+     *
+     * @param key of language value.
+     * @param color whether to translate color codes.
+     * @return language result.
+     */
     public String getValue(String key, boolean color) {
         LanguageValue<String> langValue = values.get(key);
         return color ? MessageUtility.formatMessage(langValue.getValue()) : langValue.getValue();
     }
 
+    /**
+     * Get language value as list.
+     *
+     * @param key of language value.
+     * @param color whether to translate color codes.
+     * @return language result as list.
+     */
     public List<String> getValueAsList(String key, boolean color) {
         LanguageValue<String> langValue = values.get(key);
         List<String> vals = new ArrayList<>();

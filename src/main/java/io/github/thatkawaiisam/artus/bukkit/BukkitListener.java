@@ -9,6 +9,11 @@ public class BukkitListener<T extends BukkitModule<?>> implements BaseListener, 
 
     @Getter private T module;
 
+    /**
+     * Bukkit Listener.
+     *
+     * @param module instance.
+     */
     public BukkitListener(T module) {
         this.module = module;
     }
@@ -22,4 +27,5 @@ public class BukkitListener<T extends BukkitModule<?>> implements BaseListener, 
     public void unregister() {
         HandlerList.unregisterAll(this);
     }
+
 }

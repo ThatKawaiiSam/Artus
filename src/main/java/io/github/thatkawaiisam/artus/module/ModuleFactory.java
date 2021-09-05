@@ -107,9 +107,10 @@ public class ModuleFactory<T extends Module> {
     }
 
     /**
+     * Checks whether a class is a declared module.
      *
-     * @param clazz
-     * @return
+     * @param clazz to check.
+     * @return whether class is a module.
      */
     public boolean isModule(Class<?> clazz) {
         return Module.class.isAssignableFrom(clazz);

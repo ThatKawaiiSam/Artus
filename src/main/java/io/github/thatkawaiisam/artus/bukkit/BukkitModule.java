@@ -24,4 +24,5 @@ public abstract class BukkitModule<E extends BukkitPlugin> extends Module<Bukkit
                 this.getPlugin().getDataFolder().getAbsolutePath()
         );
     }
+
 }

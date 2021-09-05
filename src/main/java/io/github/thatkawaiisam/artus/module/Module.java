@@ -20,7 +20,7 @@ public abstract class Module<T extends BaseConfiguration, E extends BasePlugin> 
     private BaseConfiguration configuration;
     private Set<BaseListener> listeners = new HashSet<>();
     private Set<BaseCommand> commands = new HashSet<>();
-    private Set<Module<T, E>> submodules = new HashSet<>();
+//    private Set<Module<F, T, E>> submodules = new HashSet<>();
 
     /**
      * Module.
@@ -132,6 +132,7 @@ public abstract class Module<T extends BaseConfiguration, E extends BasePlugin> 
      */
     public void addListener(BaseListener listener) {
         this.listeners.add(listener);
+        getPlugin().getPluginLogger().info("ADDED LISTENER TO LIST!");
     }
 
     /**
