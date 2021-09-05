@@ -1,6 +1,5 @@
 package io.github.thatkawaiisam.artus.base;
 
-import co.aikar.commands.CommandManager;
 import io.github.thatkawaiisam.artus.module.Module;
 import io.github.thatkawaiisam.artus.module.ModuleFactory;
 
