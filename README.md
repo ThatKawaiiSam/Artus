@@ -1,20 +1,19 @@
-# PluginTemplate
-TODO
+# Artus
+> The modular approach to writing Spigot & BungeeCord plugins.
 
-### Features
-TODO
 
-### In-built Handlers
+---
 
-- Commands
-- Listeners
-- Modules
-- Language
-- Configuration
+## Contributing
+When contributing, please create a pull request with the branch named as follows ``<feature/fix>/<title>``.
 
-### Contact
+To compile, run the maven command: ``mvn clean install``
 
-- MC-Market: https://www.mc-market.org/members/53967/
-- Discord: ThatKawaiiSam#1337
-- Twitter: ThatKawaiiSam
+To run unit tests, run the maven command ``mvn test``
+
+---
+
+## Contact
+
+- Discord: ThatKawaiiSam#2882
 - Telegram: ThatKawaiiSam
