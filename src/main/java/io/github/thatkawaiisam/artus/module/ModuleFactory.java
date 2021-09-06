@@ -59,7 +59,7 @@ public class ModuleFactory<T extends Module> {
     private List<T> getSortedModules(boolean enable) {
         // Define comparator.
         Comparator<T> comparator = Comparator.comparing(Module::getLoadWeight);
-        if (!enable) {
+        if (enable) {
             comparator = comparator.reversed();
         }
 
