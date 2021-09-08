@@ -22,7 +22,6 @@ public abstract class BukkitPlugin extends JavaPlugin implements BasePlugin {
         return modules;
     }
 
-
     public BukkitCommandManager getCommandManager() {
         // Create Command Manager if doesn't exist.
         if (commandManager == null) {
@@ -30,4 +29,5 @@ public abstract class BukkitPlugin extends JavaPlugin implements BasePlugin {
         }
         return commandManager;
     }
+
 }
